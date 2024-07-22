@@ -8,13 +8,16 @@
 import Foundation
 import Alamofire
 
+// MARK: - NewsInteractor
+
 class NewsInteractor: NewsInteractorProtocol {
-  
-   
-   weak var presenter:NewsPresenterProtocol?
+    
+    // MARK: - Properties
+    
+    weak var presenter: NewsPresenterProtocol?
     
     private let apikey = "RdWRaDUMdUkjzpiQC3byhmRFuzkrEmyf"
-    private lazy var URLComponent:URLComponents = {
+    private lazy var URLComponent: URLComponents = {
         var component = URLComponents(string: "https://financialmodelingprep.com")
         component?.queryItems = [
             URLQueryItem(name: "page", value: "0"),
@@ -25,16 +28,15 @@ class NewsInteractor: NewsInteractorProtocol {
         return component ?? URLComponents()
     }()
     
+    // MARK: - NewsInteractorProtocol
     
     func loadNews() {
-        guard let url = URLComponent.url else {return}
-        AF.request(url).responseDecodable(of:News.self) { response in
-            guard let data = try? response.result.get() else {return}
+        guard let url = URLComponent.url else { return }
+        AF.request(url).responseDecodable(of: News.self) { response in
+            guard let data = try? response.result.get() else { return }
             DispatchQueue.main.async {
                 self.presenter?.updateNews(news: data)
             }
         }
     }
-    
-    
 }

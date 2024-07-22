@@ -8,19 +8,27 @@
 import Foundation
 import DGCharts
 
-class DetailPresenter:DetailPresenterProtocol {
-   
+class DetailPresenter: DetailPresenterProtocol {
+    
+    // MARK: - Properties
+    
     var stockSymbol: String
+    var view: DetailViewProtocol?
+    var interactor: DetailInteractorProtocol?
+    var router: DetailRouterProtocol?
     
-    var view:DetailViewProtocol?
+    // MARK: - Initialization
     
-    var interactor:DetailInteractorProtocol?
+    init(stockSymbol: String) {
+        self.stockSymbol = stockSymbol
+    }
     
-    var router:DetailRouterProtocol?
+    // MARK: - Methods
     
     func showDetail() {
         interactor?.loadDetail()
     }
+    
     func showHistoricalData() {
         interactor?.loadHistoricalData()
     }
@@ -28,10 +36,8 @@ class DetailPresenter:DetailPresenterProtocol {
     func updateDetail(detail: DetailElement) {
         view?.showDetail(detail: detail)
     }
-    func updateHistoricalData(data:[ChartDataEntry]) {
+    
+    func updateHistoricalData(data: [ChartDataEntry]) {
         view?.showHistoricalData(data: data)
     }
-    init(stockSymbol: String) {
-            self.stockSymbol = stockSymbol
-        }
 }

@@ -8,40 +8,52 @@
 import UIKit
 import SnapKit
 
-class SavedViewController: UIViewController,SavedViewProtocol {
-    
-    private lazy var savedTableView:UITableView = {
+// MARK: - SavedViewController
+
+class SavedViewController: UIViewController, SavedViewProtocol {
+
+    // MARK: - UI Elements
+
+    private lazy var savedTableView: UITableView = {
         let table = UITableView()
         table.delegate = self
         table.dataSource = self
         table.register(MainTableViewCell.self, forCellReuseIdentifier: "saved")
         return table
     }()
-    private lazy var titleLabel:UILabel = {
-       let label = UILabel()
+
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel()
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
         label.text = "Saved stocks"
         return label
     }()
     
-    var presenter:SavedPresenterProtocol?
-    var stocks:Stock = []
+    // MARK: - Properties
+
+    var presenter: SavedPresenterProtocol?
+    var stocks: Stock = []
+
+    // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         presenter?.fetchStocks()
         print(stocks)
-
     }
-    
-    func showSavedStock(stock:Stock) {
-      stocks = stock
+
+    // MARK: - SavedViewProtocol
+
+    func showSavedStock(stock: Stock) {
+        stocks = stock
         savedTableView.reloadData()
     }
-    
-    private func setupUI(){
+
+    // MARK: - Setup UI
+
+    private func setupUI() {
         view.backgroundColor = .systemBackground
         overrideUserInterfaceStyle = .dark
         
@@ -57,12 +69,12 @@ class SavedViewController: UIViewController,SavedViewProtocol {
             make.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
         }
     }
-
 }
 
+// MARK: - UITableViewDelegate, UITableViewDataSource
 
+extension SavedViewController: UITableViewDelegate, UITableViewDataSource {
 
-extension SavedViewController:UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         stocks.count
     }
@@ -79,7 +91,7 @@ extension SavedViewController:UITableViewDelegate,UITableViewDataSource{
             guard let self = self else { return }
             let stock = self.stocks[indexPath.row]
             let symbol = stock.symbol
-            presenter?.interactor?.deleteStock(symbol: symbol)
+            self.presenter?.interactor?.deleteStock(symbol: symbol)
             self.presenter?.fetchStocks()
             completionHandler(true)
         }
@@ -88,11 +100,11 @@ extension SavedViewController:UITableViewDelegate,UITableViewDataSource{
         deleteAction.image = UIImage(systemName: "bin.xmark.fill")
         return UISwipeActionsConfiguration(actions: [deleteAction])
     }
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("123")
         let selectedSymbol = self.stocks[indexPath.row].symbol
         print(selectedSymbol)
         presenter?.showDetail(for: selectedSymbol)
     }
-    
 }

@@ -8,16 +8,20 @@
 import UIKit
 import SnapKit
 
+// MARK: - NewsTableViewCell
+
 class NewsTableViewCell: UITableViewCell {
     
-    private lazy var title:UILabel = {
+    // MARK: - Properties
+    
+    private lazy var title: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         label.numberOfLines = 0
         return label
     }()
     
-    private lazy var content:UILabel = {
+    private lazy var content: UILabel = {
         let label = UILabel()
         label.numberOfLines = 2
         label.font = UIFont.systemFont(ofSize: 14)
@@ -25,12 +29,12 @@ class NewsTableViewCell: UITableViewCell {
         return label
     }()
     
-    private lazy var date:UILabel = {
+    private lazy var date: UILabel = {
         let label = UILabel()
         return label
     }()
     
-    private lazy var author:UILabel = {
+    private lazy var author: UILabel = {
         let label = UILabel()
         return label
     }()
@@ -41,6 +45,8 @@ class NewsTableViewCell: UITableViewCell {
         return stack
     }()
     
+    // MARK: - Initializers
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
@@ -50,7 +56,9 @@ class NewsTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupUI(){
+    // MARK: - Setup UI
+    
+    private func setupUI() {
         contentView.addSubview(title)
         contentView.addSubview(content)
         contentView.addSubview(dateAndAuthorStackView)
@@ -68,12 +76,13 @@ class NewsTableViewCell: UITableViewCell {
         dateAndAuthorStackView.snp.makeConstraints { make in
             make.top.equalTo(content.snp.bottom).offset(10)
             make.leading.trailing.equalToSuperview().inset(10)
+            make.bottom.equalToSuperview().inset(10)
         }
-        
     }
     
+    // MARK: - Configuration
     
-    func configure(news:Content) {
+    func configure(news: Content) {
         title.text = news.title
         content.text = news.content
         date.text = news.date

@@ -8,7 +8,11 @@
 import Foundation
 import UIKit
 
-class NewsRouter:NewsRouterProtocol {
+// MARK: - NewsRouter
+
+class NewsRouter: NewsRouterProtocol {
+    
+    // MARK: - NewsRouterProtocol
     
     static func createNewsView() -> NewsViewController {
         let viewController = NewsViewController()
@@ -20,5 +24,4 @@ class NewsRouter:NewsRouterProtocol {
         viewController.presenter?.router = NewsRouter()
         return viewController
     }
-
 }

@@ -8,7 +8,9 @@
 import Foundation
 import UIKit
 
-class DetailRouter:DetailRouterProtocol {
+class DetailRouter: DetailRouterProtocol {
+    
+    // MARK: - Methods
     
     static func createDetailView(with symbol: String) -> DetailViewController {
         let viewController = DetailViewController()
@@ -19,6 +21,4 @@ class DetailRouter:DetailRouterProtocol {
         viewController.presenter?.interactor?.presenter = presenter
         return viewController
     }
-    
-    
 }

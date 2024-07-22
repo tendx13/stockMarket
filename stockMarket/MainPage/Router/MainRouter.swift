@@ -7,10 +7,16 @@
 
 import Foundation
 
+// MARK: - MainRouterProtocol
+
 class MainRouter: MainRouterProtocol {
     
+    // MARK: - Properties
+    
     weak var viewController: ViewController?
-    var newsVC:NewsViewController?
+    var newsVC: NewsViewController?
+    
+    // MARK: - Static Methods
     
     static func createStockView(viewController: ViewController) {
         let presenter: MainPresenterProtocol = MainPresenter()
@@ -23,7 +29,8 @@ class MainRouter: MainRouterProtocol {
         viewController.presenter?.router = router
     }
     
-
+    // MARK: - Navigation Methods
+    
     func navigateToDetail(with symbol: String) {
         let detailVC = DetailRouter.createDetailView(with: symbol)
         if let sheet = detailVC.sheetPresentationController {
@@ -32,7 +39,6 @@ class MainRouter: MainRouterProtocol {
             })]
             sheet.prefersGrabberVisible = true
             sheet.largestUndimmedDetentIdentifier = .medium
-            
         }
         
         newsVC?.dismiss(animated: true) {
@@ -53,7 +59,7 @@ class MainRouter: MainRouterProtocol {
         if let sheet = newsVC?.sheetPresentationController {
             sheet.detents = [.custom(resolver: { context in
                 return 50
-            }),.medium(), .custom(resolver: { context in
+            }), .medium(), .custom(resolver: { context in
                 return context.maximumDetentValue * 0.95
             })]
             sheet.prefersGrabberVisible = true

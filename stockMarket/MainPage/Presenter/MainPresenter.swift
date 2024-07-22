@@ -7,14 +7,17 @@
 
 import Foundation
 
-final class MainPresenter:MainPresenterProtocol {
+// MARK: - MainPresenterProtocol
+
+final class MainPresenter: MainPresenterProtocol {
+    
+    // MARK: - Properties
     
     weak var view: MainViewProtocol?
     var interactor: MainInteractorProtocol?
     var router: MainRouterProtocol?
     
-    
-    
+    // MARK: - MainPresenterProtocol Methods
     
     func showStock() {
         interactor?.loadStock()
@@ -31,6 +34,7 @@ final class MainPresenter:MainPresenterProtocol {
     func showDetail(for symbol: String) {
         router?.navigateToDetail(with: symbol)
     }
+    
     func saveStock(stock: StockElement) {
         interactor?.saveStock(stock: stock)
     }

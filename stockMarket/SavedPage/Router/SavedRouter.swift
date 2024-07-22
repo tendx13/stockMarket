@@ -7,10 +7,16 @@
 
 import Foundation
 
+// MARK: - SavedRouter
+
 class SavedRouter: SavedRouterProtocol {
-    
+
+    // MARK: - Properties
+
     weak var viewController: SavedViewController?
-    
+
+    // MARK: - Static Methods
+
     static func createStockView() -> SavedViewController {
         let viewController = SavedViewController()
         let presenter: SavedPresenterProtocol = SavedPresenter()
@@ -23,7 +29,9 @@ class SavedRouter: SavedRouterProtocol {
         viewController.presenter?.router = router
         return viewController
     }
-    
+
+    // MARK: - Navigation Methods
+
     func navigateToDetail(with symbol: String) {
         let detailVC = DetailRouter.createDetailView(with: symbol)
         viewController?.navigationController?.pushViewController(detailVC, animated: true)

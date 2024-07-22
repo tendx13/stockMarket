@@ -9,18 +9,22 @@ import UIKit
 import SnapKit
 import SkeletonView
 
+// MARK: - ViewController
+
 class ViewController: UIViewController, MainViewProtocol {
     
-    private lazy var titleLabel:UILabel = {
-       let label = UILabel()
+    // MARK: - UI Elements
+    
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel()
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
         label.text = "Stock Market"
         return label
     }()
    
-    private lazy var dateLabel:UILabel = {
-       let label = UILabel()
+    private lazy var dateLabel: UILabel = {
+        let label = UILabel()
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
         label.alpha = 0.6
@@ -28,8 +32,8 @@ class ViewController: UIViewController, MainViewProtocol {
         return label
     }()
     
-    private lazy var stockTableView : UITableView = {
-       let table = UITableView()
+    private lazy var stockTableView: UITableView = {
+        let table = UITableView()
         table.delegate = self
         table.dataSource = self
         table.register(MainTableViewCell.self, forCellReuseIdentifier: "main")
@@ -37,17 +41,16 @@ class ViewController: UIViewController, MainViewProtocol {
     }()
     
     private lazy var mainSearchBar: UISearchBar = {
-       let search = UISearchBar()
+        let search = UISearchBar()
         let image = UIImage()
         search.delegate = self
         search.setBackgroundImage(image, for: .any, barMetrics: .default)
         search.placeholder = "Search"
-       return search
-        
+        return search
     }()
     
-    private lazy var savedButton:UIButton = {
-       let button = UIButton()
+    private lazy var savedButton: UIButton = {
+        let button = UIButton()
         button.setTitle("Saved", for: .normal)
         button.addTarget(self, action: #selector(savedButtonTapped), for: .touchUpInside)
         button.setTitleColor(.systemBlue, for: .normal)
@@ -55,10 +58,13 @@ class ViewController: UIViewController, MainViewProtocol {
         return button
     }()
     
-    var stocks:Stock = []
-    var filteredStocks:Stock = []
-    var presenter:MainPresenterProtocol?
+    // MARK: - Properties
+    
+    var stocks: Stock = []
+    var filteredStocks: Stock = []
+    var presenter: MainPresenterProtocol?
 
+    // MARK: - Lifecycle Methods
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,13 +72,14 @@ class ViewController: UIViewController, MainViewProtocol {
         setupUI()
         presenter?.showStock()
         presenter?.router?.navigateToNews()
-        
     }
     
+    // MARK: - Setup UI
+
     private func setupUI() {
         view.backgroundColor = .systemBackground
         overrideUserInterfaceStyle = .dark
-        [titleLabel,dateLabel,mainSearchBar,savedButton,stockTableView].forEach {
+        [titleLabel, dateLabel, mainSearchBar, savedButton, stockTableView].forEach {
             view.addSubview($0)
         }
         
@@ -100,20 +107,24 @@ class ViewController: UIViewController, MainViewProtocol {
         }
     }
 
+    // MARK: - MainViewProtocol Methods
+
     func showStock(stock: Stock) {
-            self.stocks = stock
-            self.filteredStocks = stock
-            self.stockTableView.reloadData()
+        self.stocks = stock
+        self.filteredStocks = stock
+        self.stockTableView.reloadData()
     }
     
-    @objc func savedButtonTapped(){
+    // MARK: - Actions
+
+    @objc func savedButtonTapped() {
         presenter?.router?.navigateToSaved()
     }
-    
-
 }
 
-extension ViewController: UITableViewDelegate,UITableViewDataSource {
+// MARK: - UITableViewDelegate & UITableViewDataSource
+
+extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         filteredStocks.count
@@ -121,9 +132,9 @@ extension ViewController: UITableViewDelegate,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = stockTableView.dequeueReusableCell(withIdentifier: "main", for: indexPath) as! MainTableViewCell
-      if stocks.isEmpty {
+        if stocks.isEmpty {
             cell.startAnimateSkeleton()
-       }else {
+        } else {
             cell.stopAnimatedSkeleton()
         }
         let stock = filteredStocks[indexPath.row]
@@ -150,22 +161,21 @@ extension ViewController: UITableViewDelegate,UITableViewDataSource {
         saveAction.image = UIImage(systemName: "square.and.arrow.down")
         return UISwipeActionsConfiguration(actions: [saveAction])
     }
-    
-    
 }
+
+// MARK: - UISearchBarDelegate
 
 extension ViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        guard let query = searchBar.text?.uppercased() else {return}
-                if query.isEmpty {
-                    filteredStocks = stocks
-                } else {
-                    print(query)
-                    filteredStocks = stocks.filter{ $0.symbol.contains(query)}
-                    print(filteredStocks)
-                }
+        guard let query = searchBar.text?.uppercased() else { return }
+        if query.isEmpty {
+            filteredStocks = stocks
+        } else {
+            print(query)
+            filteredStocks = stocks.filter { $0.symbol.contains(query) }
+            print(filteredStocks)
+        }
                 
         self.stockTableView.reloadData()
     }
-    
 }

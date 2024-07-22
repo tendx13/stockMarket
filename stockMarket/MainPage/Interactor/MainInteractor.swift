@@ -8,8 +8,12 @@
 import Foundation
 import Alamofire
 
+// MARK: - MainInteractorProtocol
+
 final class MainInteractor: MainInteractorProtocol {
-   
+    
+    // MARK: - Properties
+    
     weak var presenter: MainPresenterProtocol?
     
     private let apikey = "RdWRaDUMdUkjzpiQC3byhmRFuzkrEmyf"
@@ -19,6 +23,8 @@ final class MainInteractor: MainInteractorProtocol {
         component?.queryItems = [URLQueryItem(name: "apikey", value: apikey)]
         return component ?? URLComponents()
     }()
+    
+    // MARK: - Methods
     
     func loadStock() {
         var component = baseComponent

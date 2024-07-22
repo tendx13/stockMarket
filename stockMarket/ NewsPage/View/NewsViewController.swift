@@ -9,16 +9,20 @@ import UIKit
 import SnapKit
 import SafariServices
 
+// MARK: - NewsViewController
+
 class NewsViewController: UIViewController, NewsViewProtocol {
     
-    private lazy var titleLabel:UILabel = {
+    // MARK: - UI Components
+    
+    private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.text = "Business News"
         label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
         return label
     }()
     
-    private lazy var newsTableView:UITableView = {
+    private lazy var newsTableView: UITableView = {
         let table = UITableView()
         table.delegate = self
         table.dataSource = self
@@ -27,8 +31,10 @@ class NewsViewController: UIViewController, NewsViewProtocol {
         return table
     }()
     
-    var news:[Content] = []
+    var news: [Content] = []
     var presenter: NewsPresenterProtocol?
+    
+    // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +42,7 @@ class NewsViewController: UIViewController, NewsViewProtocol {
         presenter?.showNews()
     }
     
+    // MARK: - Setup UI
     
     private func setupUI() {
         view.backgroundColor = .systemBackground
@@ -55,13 +62,15 @@ class NewsViewController: UIViewController, NewsViewProtocol {
         }
     }
     
+    // MARK: - NewsViewProtocol
+    
     func showNews(news: News) {
         self.news = news.content
         newsTableView.reloadData()
     }
-    
-
 }
+
+// MARK: - UITableViewDelegate, UITableViewDataSource
 
 extension NewsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -77,9 +86,8 @@ extension NewsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let news = self.news[indexPath.row]
-        guard let url = URL(string: news.link) else {return}
+        guard let url = URL(string: news.link) else { return }
         let safaryVC = SFSafariViewController(url: url)
         present(safaryVC, animated: true)
     }
-
 }

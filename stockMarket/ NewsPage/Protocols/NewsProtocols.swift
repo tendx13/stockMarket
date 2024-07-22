@@ -8,10 +8,14 @@
 import Foundation
 import UIKit
 
+// MARK: - NewsViewProtocol
+
 protocol NewsViewProtocol: AnyObject {
     // Presenter -> View
-    func showNews(news:News)
+    func showNews(news: News)
 }
+
+// MARK: - NewsPresenterProtocol
 
 protocol NewsPresenterProtocol: AnyObject {
     // View -> Presenter
@@ -20,14 +24,18 @@ protocol NewsPresenterProtocol: AnyObject {
     var router: NewsRouterProtocol? { get set }
     
     func showNews()
-    func updateNews(news:News)
+    func updateNews(news: News)
 }
+
+// MARK: - NewsInteractorProtocol
 
 protocol NewsInteractorProtocol: AnyObject {
     // Presenter -> Interactor
-    var presenter:NewsPresenterProtocol? {get set}
+    var presenter: NewsPresenterProtocol? { get set }
     func loadNews()
 }
+
+// MARK: - NewsRouterProtocol
 
 protocol NewsRouterProtocol: AnyObject {
     // Presenter -> Router

@@ -8,7 +8,11 @@
 import UIKit
 import SkeletonView
 
+// MARK: - MainTableViewCell
+
 class MainTableViewCell: UITableViewCell {
+    
+    // MARK: - UI Elements
     
     private lazy var nameCompanyLabel: UILabel = {
         let label = UILabel()
@@ -42,7 +46,7 @@ class MainTableViewCell: UITableViewCell {
     }()
     
     private lazy var nameStackView: UIStackView = {
-       let stack = UIStackView()
+        let stack = UIStackView()
         stack.axis = .vertical
         return stack
     }()
@@ -61,6 +65,8 @@ class MainTableViewCell: UITableViewCell {
         return stack
     }()
     
+    // MARK: - Initializers
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
@@ -70,16 +76,17 @@ class MainTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Setup UI
+    
     private func setupUI() {
-        
         contentView.addSubview(mainStackView)
-        [nameStackView,priceStackView].forEach {
+        [nameStackView, priceStackView].forEach {
             mainStackView.addArrangedSubview($0)
         }
-        [symbolLabel,nameCompanyLabel].forEach{
+        [symbolLabel, nameCompanyLabel].forEach {
             nameStackView.addArrangedSubview($0)
         }
-        [priceLabel,changesLabel].forEach{
+        [priceLabel, changesLabel].forEach {
             priceStackView.addArrangedSubview($0)
         }
         mainStackView.snp.makeConstraints { make in
@@ -101,7 +108,9 @@ class MainTableViewCell: UITableViewCell {
 //        changesLabel.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
     }
     
-    func startAnimateSkeleton(){
+    // MARK: - Skeleton Animation Methods
+    
+    func startAnimateSkeleton() {
         nameCompanyLabel.showAnimatedGradientSkeleton()
         symbolLabel.showAnimatedGradientSkeleton()
         priceLabel.showAnimatedGradientSkeleton()
@@ -115,12 +124,13 @@ class MainTableViewCell: UITableViewCell {
         changesLabel.hideSkeleton()
     }
     
-    func config(stock:StockElement) {
+    // MARK: - Configuration Method
+    
+    func config(stock: StockElement) {
         nameCompanyLabel.text = stock.name
         symbolLabel.text = stock.symbol
         priceLabel.text = "\(stock.price)"
         changesLabel.text = "\(stock.change)"
         changesLabel.backgroundColor = stock.change > 0 ? UIColor.green.withAlphaComponent(0.7) : UIColor.red.withAlphaComponent(0.7)
     }
-    
 }

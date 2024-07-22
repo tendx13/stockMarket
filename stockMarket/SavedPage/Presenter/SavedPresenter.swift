@@ -7,15 +7,19 @@
 
 import Foundation
 
-class SavedPresenter:SavedPresenterProtocol {
+// MARK: - SavedPresenter
 
-    var view:SavedViewProtocol?
-    
-    var interactor:SavedInteractorProtocol?
-    
-    var router:SavedRouterProtocol?
-    
-    func presentFetchedStocks(_ stocks:Stock) {
+class SavedPresenter: SavedPresenterProtocol {
+
+    // MARK: - Properties
+
+    var view: SavedViewProtocol?
+    var interactor: SavedInteractorProtocol?
+    var router: SavedRouterProtocol?
+
+    // MARK: - Methods
+
+    func presentFetchedStocks(_ stocks: Stock) {
         view?.showSavedStock(stock: stocks)
     }
     
@@ -23,12 +27,11 @@ class SavedPresenter:SavedPresenterProtocol {
         interactor?.fetchStocks()
     }
     
-    func deleteStock(symbol:String){
+    func deleteStock(symbol: String) {
         interactor?.deleteStock(symbol: symbol)
     }
     
     func showDetail(for symbol: String) {
         router?.navigateToDetail(with: symbol)
     }
-    
 }
