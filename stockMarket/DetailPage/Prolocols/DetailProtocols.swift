@@ -9,11 +9,15 @@ import Foundation
 import UIKit
 import DGCharts
 
+// MARK: - View Protocol
+
 protocol DetailViewProtocol: AnyObject {
     // Presenter -> View
-    func showDetail(detail:DetailElement)
-    func showHistoricalData(data:[ChartDataEntry])
+    func showDetail(detail: DetailElement)
+    func showHistoricalData(data: [ChartDataEntry])
 }
+
+// MARK: - Presenter Protocol
 
 protocol DetailPresenterProtocol: AnyObject {
     // View -> Presenter
@@ -23,22 +27,24 @@ protocol DetailPresenterProtocol: AnyObject {
     
     func showDetail()
     func showHistoricalData()
-    func updateDetail(detail:DetailElement)
-    func updateHistoricalData(data:[ChartDataEntry])
-    
-    
+    func updateDetail(detail: DetailElement)
+    func updateHistoricalData(data: [ChartDataEntry])
 }
+
+// MARK: - Interactor Protocol
 
 protocol DetailInteractorProtocol: AnyObject {
     // Presenter -> Interactor
-    var presenter:DetailPresenterProtocol? {get set}
-    var stockSymbol: String {get set}
+    var presenter: DetailPresenterProtocol? { get set }
+    var stockSymbol: String { get set }
+    
     func loadDetail()
     func loadHistoricalData()
-    
 }
+
+// MARK: - Router Protocol
 
 protocol DetailRouterProtocol: AnyObject {
     // Presenter -> Router
-    static func createDetailView(with symbol:String) -> DetailViewController
+    static func createDetailView(with symbol: String) -> DetailViewController
 }
