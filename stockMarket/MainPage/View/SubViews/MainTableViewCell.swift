@@ -12,6 +12,11 @@ import SkeletonView
 
 class MainTableViewCell: UITableViewCell {
     
+    // MARK: - Properties
+    
+    private var isShowingChangePercentage = false
+    private var stock: StockElement?
+    
     // MARK: - UI Elements
     
     private lazy var nameCompanyLabel: UILabel = {
@@ -42,6 +47,9 @@ class MainTableViewCell: UITableViewCell {
         label.textAlignment = .right
         label.clipsToBounds = true
         label.layer.cornerRadius = 5
+        label.isUserInteractionEnabled = true
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleChangesLabelTap))
+        label.addGestureRecognizer(tapGesture)
         return label
     }()
     
@@ -127,10 +135,29 @@ class MainTableViewCell: UITableViewCell {
     // MARK: - Configuration Method
     
     func config(stock: StockElement) {
+        self.stock = stock
         nameCompanyLabel.text = stock.name
         symbolLabel.text = stock.symbol
         priceLabel.text = "\(stock.price)"
-        changesLabel.text = "\(stock.change)"
+        updateChangesLabel(stock: stock)
         changesLabel.backgroundColor = stock.change > 0 ? UIColor.green.withAlphaComponent(0.7) : UIColor.red.withAlphaComponent(0.7)
     }
+    
+    // MARK: - Update Changes Label
+        
+        private func updateChangesLabel(stock: StockElement) {
+            if isShowingChangePercentage {
+                changesLabel.text = stock.changesPercentage > 0 ? "+\(String(format: "%.1f", stock.changesPercentage))%" : "\(String(format: "%.1f", stock.changesPercentage))%"
+            } else {
+                changesLabel.text = stock.change > 0 ? "+\(stock.change)" : "\(stock.change)"
+            }
+        }
+        
+        // MARK: - Handle Changes Label Tap
+        
+        @objc private func handleChangesLabelTap() {
+            isShowingChangePercentage.toggle()
+            updateChangesLabel(stock: stock! )
+        }
 }
+

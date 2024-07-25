@@ -37,6 +37,7 @@ class ViewController: UIViewController, MainViewProtocol {
         table.delegate = self
         table.dataSource = self
         table.register(MainTableViewCell.self, forCellReuseIdentifier: "main")
+        table.isSkeletonable = true
         return table
     }()
     
@@ -110,9 +111,14 @@ class ViewController: UIViewController, MainViewProtocol {
     // MARK: - MainViewProtocol Methods
 
     func showStock(stock: Stock) {
-        self.stocks = stock
+        DispatchQueue.main.async {
+            self.stocks = stock
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                self.stockTableView.reloadData()
+            }
+        }
         self.filteredStocks = stock
-        self.stockTableView.reloadData()
+        stockTableView.reloadData()
     }
     
     // MARK: - Actions

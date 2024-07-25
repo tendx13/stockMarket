@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Lottie
 
 // MARK: - SavedViewController
 
@@ -33,13 +34,19 @@ class SavedViewController: UIViewController, SavedViewProtocol {
     // MARK: - Properties
 
     var presenter: SavedPresenterProtocol?
-    var stocks: Stock = []
+    var stocks: Stock = [] {
+        didSet {
+            
+        }
+    }
+    let emptyAnimationView = LottieAnimationView()
 
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        setupAnimation()
         presenter?.fetchStocks()
         print(stocks)
     }
@@ -67,6 +74,26 @@ class SavedViewController: UIViewController, SavedViewProtocol {
         savedTableView.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom)
             make.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+    }
+    
+    func setupAnimation() {
+        let animation = LottieAnimation.named("404_animation")
+        emptyAnimationView.animation = animation
+        emptyAnimationView.frame = CGRect(x: 0, y: 0, width: 400, height: 400)
+        emptyAnimationView.loopMode = .loop
+        emptyAnimationView.center = view.center
+        emptyAnimationView.contentMode = .scaleAspectFit
+        view.addSubview(emptyAnimationView)
+    }
+    
+    func updateAnimation() {
+        if stocks.isEmpty {
+            emptyAnimationView.isHidden = false
+            emptyAnimationView.play()
+        } else {
+            emptyAnimationView.isHidden = true
+            emptyAnimationView.stop()
         }
     }
 }
