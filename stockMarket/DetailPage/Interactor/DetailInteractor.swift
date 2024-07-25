@@ -45,9 +45,12 @@ class DetailInteractor: DetailInteractorProtocol {
         }
     }
     
-    func loadHistoricalData() {
+    func loadHistoricalData(for period: String) {
         var component = baseComponent
         component.path = "/api/v3/historical-price-full/\(stockSymbol)"
+        let fromDate = startDate(for: period)
+        print(fromDate)
+        component.queryItems?.append(URLQueryItem(name: "from", value: fromDate))
         guard let url = component.url else { return }
         AF.request(url).responseDecodable(of: HistoricalData.self) { response in
             switch response.result {
@@ -62,6 +65,33 @@ class DetailInteractor: DetailInteractorProtocol {
             case .failure(let error):
                 print("Error fetching data: \(error.localizedDescription)")
             }
+        }
+    }
+    func startDate(for interval: String) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        
+        let today = Date()
+        let calendar = Calendar.current
+        
+        switch interval {
+        case "All":
+            guard let fiveYearAgo = calendar.date(byAdding: .year, value: -5, to: today) else { return "" }
+            return dateFormatter.string(from: fiveYearAgo)
+        case "1d":
+            guard let dayAgo = calendar.date(byAdding: .day, value: -1, to: today) else { return "" }
+            return dateFormatter.string(from: dayAgo)
+        case "1w":
+            guard let weekAgo = calendar.date(byAdding: .day, value: -7, to: today) else { return "" }
+            return dateFormatter.string(from: weekAgo)
+        case "1m":
+            guard let monthAgo = calendar.date(byAdding: .month, value: -1, to: today) else { return "" }
+            return dateFormatter.string(from: monthAgo)
+        case "1y":
+            guard let yearAgo = calendar.date(byAdding: .year, value: -1, to: today) else { return "" }
+            return dateFormatter.string(from: yearAgo)
+        default:
+            return dateFormatter.string(from: today)
         }
     }
     

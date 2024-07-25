@@ -142,7 +142,6 @@ class DetailViewController: UIViewController, DetailViewProtocol {
         let chart = LineChartView()
         chart.leftAxis.enabled = false
         chart.xAxis.labelPosition = .bottom
-        chart.animate(xAxisDuration: 2.5)
         return chart
     }()
     
@@ -150,6 +149,13 @@ class DetailViewController: UIViewController, DetailViewProtocol {
         let view = UIView()
         return view
     }()
+    
+    private lazy var timeSegmentedControl: UISegmentedControl = {
+        let control = UISegmentedControl(items: ["All", "1D", "1W", "1M", "1Y"])
+        control.selectedSegmentIndex = 0
+        control.addTarget(self, action: #selector(timeIntervalChanged), for: .valueChanged)
+        return control
+       }()
     
     // MARK: - Properties
     
@@ -168,7 +174,7 @@ class DetailViewController: UIViewController, DetailViewProtocol {
         super.viewDidLoad()
         setupUI()
         presenter?.showDetail()
-        presenter?.showHistoricalData()
+        presenter?.showHistoricalData(for: "All")
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -185,7 +191,7 @@ class DetailViewController: UIViewController, DetailViewProtocol {
         view.addSubview(detailScrollView)
         detailScrollView.addSubview(contentView)
         
-        [companyNameStackView, website, currency, priceStackView, metricsStackView, lineChartView, descriptionCompany].forEach {
+        [companyNameStackView, website, currency, priceStackView, metricsStackView, lineChartView,timeSegmentedControl, descriptionCompany].forEach {
             contentView.addSubview($0)
         }
         
@@ -243,8 +249,14 @@ class DetailViewController: UIViewController, DetailViewProtocol {
             make.height.equalTo(300)
         }
         
-        descriptionCompany.snp.makeConstraints { make in
+        timeSegmentedControl.snp.makeConstraints { make in
             make.top.equalTo(lineChartView.snp.bottom).offset(20)
+            make.leading.equalTo(contentView.snp.leading).offset(10)
+            make.trailing.equalTo(contentView.snp.trailing).inset(10)
+        }
+        
+        descriptionCompany.snp.makeConstraints { make in
+            make.top.equalTo(timeSegmentedControl.snp.bottom).offset(20)
             make.leading.equalTo(contentView.snp.leading).offset(10)
             make.trailing.equalTo(contentView.snp.trailing).inset(10)
             make.bottom.equalTo(contentView.snp.bottom).inset(20)
@@ -275,6 +287,7 @@ class DetailViewController: UIViewController, DetailViewProtocol {
         let data = LineChartData(dataSet: dataSet)
         data.setDrawValues(false)
         lineChartView.data = data
+        lineChartView.animate(xAxisDuration: 2.5)
     }
     func content() {
         guard let details = details else { return }
@@ -314,5 +327,9 @@ class DetailViewController: UIViewController, DetailViewProtocol {
         let safaryVC = SFSafariViewController(url: url)
         present(safaryVC, animated: true)
     }
-    
+    @objc private func timeIntervalChanged(_ sender: UISegmentedControl) {
+        let periods = ["All", "1d", "1w", "1m", "1y"]
+        let selectedPeriod = periods[sender.selectedSegmentIndex]
+        presenter?.showHistoricalData(for: selectedPeriod)
+    }
 }

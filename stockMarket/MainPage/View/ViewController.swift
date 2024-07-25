@@ -162,7 +162,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             self.stockTableView.reloadData()
             completionHandler(true)
         }
-    
         saveAction.backgroundColor = .systemGreen
         saveAction.image = UIImage(systemName: "square.and.arrow.down")
         return UISwipeActionsConfiguration(actions: [saveAction])

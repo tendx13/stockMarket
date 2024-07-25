@@ -36,7 +36,7 @@ class SavedViewController: UIViewController, SavedViewProtocol {
     var presenter: SavedPresenterProtocol?
     var stocks: Stock = [] {
         didSet {
-            
+            updateAnimation()
         }
     }
     let emptyAnimationView = LottieAnimationView()

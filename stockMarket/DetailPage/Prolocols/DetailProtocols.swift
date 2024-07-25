@@ -26,7 +26,7 @@ protocol DetailPresenterProtocol: AnyObject {
     var router: DetailRouterProtocol? { get set }
     
     func showDetail()
-    func showHistoricalData()
+    func showHistoricalData(for:String)
     func updateDetail(detail: DetailElement)
     func updateHistoricalData(data: [ChartDataEntry])
 }
@@ -39,7 +39,7 @@ protocol DetailInteractorProtocol: AnyObject {
     var stockSymbol: String { get set }
     
     func loadDetail()
-    func loadHistoricalData()
+    func loadHistoricalData(for:String)
 }
 
 // MARK: - Router Protocol

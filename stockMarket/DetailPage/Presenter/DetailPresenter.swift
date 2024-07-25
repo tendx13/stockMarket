@@ -29,8 +29,8 @@ class DetailPresenter: DetailPresenterProtocol {
         interactor?.loadDetail()
     }
     
-    func showHistoricalData() {
-        interactor?.loadHistoricalData()
+    func showHistoricalData(for period:String) {
+        interactor?.loadHistoricalData(for: period)
     }
     
     func updateDetail(detail: DetailElement) {
