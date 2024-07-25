@@ -1,4 +1,3 @@
-//
 //  NewsViewController.swift
 //  stockMarket
 //
@@ -27,8 +26,28 @@ class NewsViewController: UIViewController, NewsViewProtocol {
         table.delegate = self
         table.dataSource = self
         table.register(NewsTableViewCell.self, forCellReuseIdentifier: "news")
-        table.rowHeight = 150
+        table.isScrollEnabled = false
         return table
+    }()
+    
+    private lazy var seeMoreButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("See More", for: .normal)
+        button.addTarget(self, action: #selector(seeMore), for: .touchUpInside)
+        button.setTitleColor(.systemBlue, for: .normal)
+        return button
+    }()
+    
+    private lazy var newsScrollView: UIScrollView = {
+        let scroll = UIScrollView()
+        scroll.showsHorizontalScrollIndicator = false
+        scroll.showsVerticalScrollIndicator = true
+        return scroll
+    }()
+    
+    private lazy var contentView: UIView = {
+        let view = UIView()
+        return view
     }()
     
     var news: [Content] = []
@@ -47,18 +66,47 @@ class NewsViewController: UIViewController, NewsViewProtocol {
     private func setupUI() {
         view.backgroundColor = .systemBackground
         overrideUserInterfaceStyle = .dark
-        view.addSubview(titleLabel)
-        view.addSubview(newsTableView)
+        view.addSubview(newsScrollView)
+        newsScrollView.addSubview(contentView)
+        contentView.addSubview(titleLabel)
+        contentView.addSubview(newsTableView)
+        contentView.addSubview(seeMoreButton)
+        
+        newsScrollView.snp.makeConstraints { make in
+            make.edges.equalTo(view.safeAreaLayoutGuide)
+        }
+        contentView.snp.makeConstraints { make in
+            make.edges.equalTo(newsScrollView)
+            make.width.equalTo(newsScrollView)
+        }
         
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(10)
-            make.leading.equalTo(view.safeAreaLayoutGuide.snp.leading).offset(10)
+            make.top.equalTo(contentView.snp.top).offset(10)
+            make.leading.equalTo(contentView.snp.leading).offset(10)
         }
+        
         newsTableView.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(10)
-            make.leading.equalTo(view.safeAreaLayoutGuide.snp.leading)
-            make.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing)
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+            make.top.equalTo(titleLabel.snp.bottom).offset(20)
+            make.leading.equalTo(contentView.snp.leading)
+            make.trailing.equalTo(contentView.snp.trailing)
+            make.height.equalTo(0)
+        }
+        
+        seeMoreButton.snp.makeConstraints { make in
+            make.top.equalTo(newsTableView.snp.bottom).offset(10)
+            make.trailing.equalTo(contentView.snp.trailing).inset(10)
+            make.bottom.equalTo(contentView.snp.bottom)
+        }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        updateTableViewHeight()
+    }
+    
+    private func updateTableViewHeight() {
+        newsTableView.snp.updateConstraints { make in
+            make.height.equalTo(newsTableView.contentSize.height)
         }
     }
     
@@ -67,6 +115,14 @@ class NewsViewController: UIViewController, NewsViewProtocol {
     func showNews(news: News) {
         self.news = news.content
         newsTableView.reloadData()
+        view.setNeedsLayout()
+        view.layoutIfNeeded()
+    }
+    
+    @objc func seeMore() {
+        guard let url = URL(string: "https://financialmodelingprep.com/market-news") else { return }
+        let safariVC = SFSafariViewController(url: url)
+        present(safariVC, animated: true)
     }
 }
 
@@ -87,7 +143,7 @@ extension NewsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let news = self.news[indexPath.row]
         guard let url = URL(string: news.link) else { return }
-        let safaryVC = SFSafariViewController(url: url)
-        present(safaryVC, animated: true)
+        let safariVC = SFSafariViewController(url: url)
+        present(safariVC, animated: true)
     }
 }

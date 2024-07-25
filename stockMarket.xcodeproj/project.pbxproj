@@ -32,6 +32,7 @@
 		706C172C2C35A1F60094AE20 /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706C172B2C35A1F60094AE20 /* MainTableViewCell.swift */; };
 		706C172E2C35A7130094AE20 /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706C172D2C35A7130094AE20 /* MainPresenter.swift */; };
 		706C17302C35A90D0094AE20 /* MainInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706C172F2C35A90D0094AE20 /* MainInteractor.swift */; };
+		7097F79A2C52A7120089C37D /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 7097F7992C52A7120089C37D /* Kingfisher */; };
 		70AF13762C43858F005413F2 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AF13752C43858F005413F2 /* DetailViewController.swift */; };
 		70AF13782C4385AB005413F2 /* DetailInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AF13772C4385AB005413F2 /* DetailInteractor.swift */; };
 		70AF137A2C4385B6005413F2 /* DetailRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AF13792C4385B6005413F2 /* DetailRouter.swift */; };
@@ -94,6 +95,7 @@
 				706A28792C4A712500DADCDF /* DGCharts in Frameworks */,
 				70D5F7942C39972F00610932 /* RxMoya in Frameworks */,
 				70B7A4F82C4809FD00D34179 /* Lottie in Frameworks */,
+				7097F79A2C52A7120089C37D /* Kingfisher in Frameworks */,
 				70D5F7902C39972F00610932 /* Moya in Frameworks */,
 				70D5F7922C39972F00610932 /* ReactiveMoya in Frameworks */,
 				70D5F78E2C39972F00610932 /* CombineMoya in Frameworks */,
@@ -442,6 +444,7 @@
 				70B6E5C92C3ED6DD00FE7AE9 /* SkeletonView */,
 				70B7A4F72C4809FD00D34179 /* Lottie */,
 				706A28782C4A712500DADCDF /* DGCharts */,
+				7097F7992C52A7120089C37D /* Kingfisher */,
 			);
 			productName = stockMarket;
 			productReference = 706C17032C359A9B0094AE20 /* stockMarket.app */;
@@ -477,6 +480,7 @@
 				70B6E5C82C3ED6DD00FE7AE9 /* XCRemoteSwiftPackageReference "SkeletonView" */,
 				70B7A4F62C4809FD00D34179 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				706A28772C4A712500DADCDF /* XCRemoteSwiftPackageReference "Charts" */,
+				7097F7982C52A7120089C37D /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = 706C17042C359A9B0094AE20 /* Products */;
 			projectDirPath = "";
@@ -754,6 +758,14 @@
 				minimumVersion = 5.1.0;
 			};
 		};
+		7097F7982C52A7120089C37D /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.12.0;
+			};
+		};
 		70B6E5C82C3ED6DD00FE7AE9 /* XCRemoteSwiftPackageReference "SkeletonView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Juanpe/SkeletonView.git";
@@ -793,6 +805,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 706A28772C4A712500DADCDF /* XCRemoteSwiftPackageReference "Charts" */;
 			productName = DGCharts;
+		};
+		7097F7992C52A7120089C37D /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7097F7982C52A7120089C37D /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 		70B6E5C92C3ED6DD00FE7AE9 /* SkeletonView */ = {
 			isa = XCSwiftPackageProductDependency;

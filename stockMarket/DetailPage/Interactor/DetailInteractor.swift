@@ -16,7 +16,7 @@ class DetailInteractor: DetailInteractorProtocol {
     var stockSymbol: String
     weak var presenter: DetailPresenterProtocol?
     
-    private let apikey = "RdWRaDUMdUkjzpiQC3byhmRFuzkrEmyf"
+    private let apikey =  "l66zrTGImfy8pVEuQVrNHc1dySLBamkH" //"RdWRaDUMdUkjzpiQC3byhmRFuzkrEmyf"
     private lazy var baseComponent: URLComponents = {
         var component = URLComponents(string: "https://financialmodelingprep.com")
         component?.queryItems = [URLQueryItem(name: "apikey", value: apikey)]
