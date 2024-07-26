@@ -49,7 +49,6 @@ class DetailInteractor: DetailInteractorProtocol {
         var component = baseComponent
         component.path = "/api/v3/historical-price-full/\(stockSymbol)"
         let fromDate = startDate(for: period)
-        print(fromDate)
         component.queryItems?.append(URLQueryItem(name: "from", value: fromDate))
         guard let url = component.url else { return }
         AF.request(url).responseDecodable(of: HistoricalData.self) { response in
@@ -78,9 +77,6 @@ class DetailInteractor: DetailInteractorProtocol {
         case "All":
             guard let fiveYearAgo = calendar.date(byAdding: .year, value: -5, to: today) else { return "" }
             return dateFormatter.string(from: fiveYearAgo)
-        case "1d":
-            guard let dayAgo = calendar.date(byAdding: .day, value: -1, to: today) else { return "" }
-            return dateFormatter.string(from: dayAgo)
         case "1w":
             guard let weekAgo = calendar.date(byAdding: .day, value: -7, to: today) else { return "" }
             return dateFormatter.string(from: weekAgo)

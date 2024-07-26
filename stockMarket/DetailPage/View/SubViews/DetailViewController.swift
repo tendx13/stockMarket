@@ -151,7 +151,7 @@ class DetailViewController: UIViewController, DetailViewProtocol {
     }()
     
     private lazy var timeSegmentedControl: UISegmentedControl = {
-        let control = UISegmentedControl(items: ["All", "1D", "1W", "1M", "1Y"])
+        let control = UISegmentedControl(items: ["All", "1W", "1M", "1Y"])
         control.selectedSegmentIndex = 0
         control.addTarget(self, action: #selector(timeIntervalChanged), for: .valueChanged)
         return control
@@ -328,7 +328,7 @@ class DetailViewController: UIViewController, DetailViewProtocol {
         present(safaryVC, animated: true)
     }
     @objc private func timeIntervalChanged(_ sender: UISegmentedControl) {
-        let periods = ["All", "1d", "1w", "1m", "1y"]
+        let periods = ["All", "1w", "1m", "1y"]
         let selectedPeriod = periods[sender.selectedSegmentIndex]
         presenter?.showHistoricalData(for: selectedPeriod)
     }
