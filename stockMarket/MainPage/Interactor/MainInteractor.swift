@@ -16,7 +16,7 @@ final class MainInteractor: MainInteractorProtocol {
     
     weak var presenter: MainPresenterProtocol?
     
-    private let apikey = "l66zrTGImfy8pVEuQVrNHc1dySLBamkH" //"RdWRaDUMdUkjzpiQC3byhmRFuzkrEmyf"
+    private let apikey = APIConfig.shared.apiKey
     
     private lazy var baseComponent: URLComponents = {
         var component = URLComponents(string: "https://financialmodelingprep.com")

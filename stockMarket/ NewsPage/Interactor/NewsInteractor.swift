@@ -16,7 +16,7 @@ class NewsInteractor: NewsInteractorProtocol {
     
     weak var presenter: NewsPresenterProtocol?
     
-    private let apikey = "l66zrTGImfy8pVEuQVrNHc1dySLBamkH" //"RdWRaDUMdUkjzpiQC3byhmRFuzkrEmyf"
+    private let apikey = APIConfig.shared.apiKey
     private lazy var URLComponent: URLComponents = {
         var component = URLComponents(string: "https://financialmodelingprep.com")
         component?.queryItems = [

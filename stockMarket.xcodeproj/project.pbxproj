@@ -48,6 +48,7 @@
 		70D5F7942C39972F00610932 /* RxMoya in Frameworks */ = {isa = PBXBuildFile; productRef = 70D5F7932C39972F00610932 /* RxMoya */; };
 		70D5F7972C39976800610932 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 70D5F7962C39976800610932 /* SnapKit */; };
 		70D5F79B2C399A6600610932 /* MainRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D5F79A2C399A6600610932 /* MainRouter.swift */; };
+		70EBCC432C55772D002BE634 /* APIConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70EBCC422C55772D002BE634 /* APIConfig.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -85,6 +86,7 @@
 		70AF137F2C4394D3005413F2 /* Detail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Detail.swift; sourceTree = "<group>"; };
 		70C122D02C5248F20039136E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		70D5F79A2C399A6600610932 /* MainRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRouter.swift; sourceTree = "<group>"; };
+		70EBCC422C55772D002BE634 /* APIConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIConfig.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -263,6 +265,7 @@
 				70AF136D2C43852F005413F2 /* DetailPage */,
 				706C17062C359A9B0094AE20 /* AppDelegate.swift */,
 				706C17082C359A9B0094AE20 /* SceneDelegate.swift */,
+				70EBCC422C55772D002BE634 /* APIConfig.swift */,
 				706C17112C359A9C0094AE20 /* LaunchScreen.storyboard */,
 				70C122D02C5248F20039136E /* Assets.xcassets */,
 				706C17142C359A9C0094AE20 /* Info.plist */,
@@ -518,6 +521,7 @@
 				706A28762C4A662000DADCDF /* HistoricalData.swift in Sources */,
 				70AF13782C4385AB005413F2 /* DetailInteractor.swift in Sources */,
 				70028FDF2C42C4120008A326 /* NewsTableViewCell.swift in Sources */,
+				70EBCC432C55772D002BE634 /* APIConfig.swift in Sources */,
 				706C17072C359A9B0094AE20 /* AppDelegate.swift in Sources */,
 				70028FDC2C42BF780008A326 /* News.swift in Sources */,
 				70028FD22C4274660008A326 /* NewsViewController.swift in Sources */,
